@@ -1,6 +1,8 @@
-function drawBoard(boardSize, body) {
+function drawBoard(boardSize = 16) {
     console.log("DRAWING BOARD!")
     let pixelDivider = 1;
+    boardSize = this.innerText;
+    console.log(boardSize);
     if (boardSize == "32x32") {
         pixelDivider = 2;
         boardSize = 32;
@@ -18,7 +20,7 @@ function drawBoard(boardSize, body) {
             div.style.width = `${pixelSize}px`;
             div.style.height = `${pixelSize}px`;   
             div.classList.add('pixel')
-            body.appendChild(div);
+            drawContainer.appendChild(div);
         }
     }
 }
@@ -29,17 +31,18 @@ function redrawBoard () {
     for (let i=0; i<canvasSize; i++) {
         drawContainer.removeChild(drawContainer.lastElementChild)
     }
+    drawBoard()
 }
 
-function colorPixel(pixels, color) {
+function colorPixel() {
     pixels.forEach(pixel => pixel.addEventListener('mouseover', (e) => {
         if (e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "white") {
-            e.target.style.backgroundColor = color.value;
+            e.target.style.backgroundColor = currentColor.value;
         }
     }))
 }
 
-function eraseBoard(pixels) {
+function eraseBoard() {
     pixels.forEach(pixel => pixel.style.backgroundColor = "white") 
 }
 
@@ -52,8 +55,8 @@ const pixels = document.querySelectorAll('.pixel');
 const canvasSizeButton = document.querySelectorAll('.canvas-size-button');
 
 
-drawContainer.addEventListener('mouseover', colorPixel.bind(null, pixels, currentColor));
-eraseAll.addEventListener('click', eraseBoard.bind(null, pixels));
+drawContainer.addEventListener('mouseover', colorPixel());
+eraseAll.addEventListener('click', eraseBoard.bind());
 canvasSizeButton.forEach(button => button.addEventListener('click', (e) => {
     redrawBoard();
 }))

@@ -59,7 +59,9 @@ body {
     display: flex;
     flex-wrap: wrap;
     max-width: 640px;
+    min-width: 640px;
     max-height: 640px;
+    min-height: 640px;
     border: solid;
     background-color: white;
 }
