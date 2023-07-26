@@ -2,8 +2,8 @@ function drawBoard(boardSize = 16, body) {
     for (let j=0; j<boardSize; j++) {
         for (let i=0; i<boardSize; i++) {    
             const div = document.createElement('div');
-            div.style.width = '30px';
-            div.style.height = '30px';   
+            div.style.width = '40px';
+            div.style.height = '40px';   
             div.classList.add('pixel')
             body.appendChild(div);
         }
