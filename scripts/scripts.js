@@ -10,12 +10,16 @@ function drawBoard(boardSize = 16, body) {
     }
 }
 
-const drawContainer = document.querySelector('.container');
+const drawContainer = document.querySelector('.sketch');
+const currentColor = document.querySelector('#colorpicker');
 drawBoard(16, drawContainer);
 
 const pixels = document.querySelectorAll('.pixel');
-console.log(pixels)
 pixels.forEach(pixel => pixel.addEventListener('mouseover', (e) => {
-    console.log(e);
-    e.target.classList.add('pixel-red');
+    console.log(e.target.style.color == "")
+    if (e.target.style.backgroundColor == "") {
+        console.log(currentColor.value)
+        e.target.style.backgroundColor = currentColor.value;
+    } else {
+    }
 }))
