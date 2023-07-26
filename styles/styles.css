@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 480px;
+    max-height: 480px;
+    border: solid;
+}
+
+.pixel-red {
+    background-color: red;
+}
