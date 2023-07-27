@@ -1,28 +1,40 @@
 const drawContainer = document.querySelector('.sketch');
-let pixelsCheck = 0;
-drawBoard();
-
-const currentColor = document.querySelector('#colorpicker');
+let currentColor = document.querySelector('#colorpicker');
 const eraseAll = document.querySelector('.erase-all');
 const canvasSizeButton = document.querySelectorAll('.canvas-size-button');
+const rainbowButton = document.querySelector('.rainbow-button');
+let pixelsCheck = 0;
+let rainbowToggle = 0;
+drawBoard();
+
 let pixels= document.querySelectorAll(".pixel");
 
 
 drawContainer.addEventListener('mouseover', colorPixel);
 eraseAll.addEventListener('click', eraseBoard);
 canvasSizeButton.forEach(button => button.addEventListener('click', redrawBoard))
+rainbowButton.addEventListener('click', rainbowMode);
 
 function drawBoard(boardSize = "16x16") {
     let pixelDivider = 1;
     if (boardSize == "32x32") {
         pixelDivider = 2;
         boardSize = 32;
+        canvasSizeButton.item(0).classList.remove("button-selected");
+        canvasSizeButton.item(1).classList.add("button-selected");
+        canvasSizeButton.item(2).classList.remove("button-selected");
     } else if (boardSize == "64x64") {
         pixelDivider = 4;
         boardSize = 64;
+        canvasSizeButton.item(0).classList.remove("button-selected");
+        canvasSizeButton.item(1).classList.remove("button-selected");
+        canvasSizeButton.item(2).classList.add("button-selected");
     } else {
         pixelDivider = 1;
         boardSize = 16;
+        canvasSizeButton.item(0).classList.add("button-selected");
+        canvasSizeButton.item(1).classList.remove("button-selected");
+        canvasSizeButton.item(2).classList.remove("button-selected");
     }
     for (let j=0; j<boardSize; j++) {
         for (let i=0; i<boardSize; i++) {    
@@ -51,12 +63,28 @@ function redrawBoard (e) {
 
 function colorPixel() {
     pixels.forEach(pixel => pixel.addEventListener('mouseover', (e) => {
-        if (e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "white") {
+        /*if (e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "white") {
             e.target.style.backgroundColor = currentColor.value;
+        }*/
+        if (rainbowToggle == 0){
+            e.target.style.backgroundColor = currentColor.value;
+        } else {
+            e.target.style.backgroundColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
         }
     }))
 }
 
 function eraseBoard() {
     pixels.forEach(pixel => pixel.style.backgroundColor = "white")
+}
+
+function rainbowMode() {
+    if (rainbowToggle == 0) {
+        rainbowToggle = 1;
+        rainbowButton.classList.add('button-selected');
+    } else {
+        rainbowToggle = 0;
+        rainbowButton.classList.remove('button-selected');
+    }
+    console.log(rainbowToggle);
 }
