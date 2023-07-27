@@ -77,7 +77,10 @@ function colorPixel() {
         }
         console.log(e.target.style.backgroundColor)
 
-        if (overlapToggle == 0 && e.target.style.backgroundColor != "") {       
+        if (overlapToggle == 0) {
+            if (e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "white") {
+                e.target.style.backgroundColor = colour;  
+            }              
         } else {
             e.target.style.backgroundColor = colour;
         }
