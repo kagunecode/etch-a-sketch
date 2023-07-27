@@ -3,8 +3,10 @@ let currentColor = document.querySelector('#colorpicker');
 const eraseAll = document.querySelector('.erase-all');
 const canvasSizeButton = document.querySelectorAll('.canvas-size-button');
 const rainbowButton = document.querySelector('.rainbow-button');
+const overlapButton = document.querySelector('.overlap-button')
 let pixelsCheck = 0;
 let rainbowToggle = 0;
+let overlapToggle = 0;
 drawBoard();
 
 let pixels= document.querySelectorAll(".pixel");
@@ -14,6 +16,7 @@ drawContainer.addEventListener('mouseover', colorPixel);
 eraseAll.addEventListener('click', eraseBoard);
 canvasSizeButton.forEach(button => button.addEventListener('click', redrawBoard))
 rainbowButton.addEventListener('click', rainbowMode);
+overlapButton.addEventListener('click', overlapMode);
 
 function drawBoard(boardSize = "16x16") {
     let pixelDivider = 1;
@@ -66,10 +69,17 @@ function colorPixel() {
         /*if (e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "white") {
             e.target.style.backgroundColor = currentColor.value;
         }*/
+        let colour = "";
         if (rainbowToggle == 0){
-            e.target.style.backgroundColor = currentColor.value;
+            colour = currentColor.value;
         } else {
-            e.target.style.backgroundColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+            colour = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+        }
+        console.log(e.target.style.backgroundColor)
+
+        if (overlapToggle == 0 && e.target.style.backgroundColor != "") {       
+        } else {
+            e.target.style.backgroundColor = colour;
         }
     }))
 }
@@ -86,5 +96,14 @@ function rainbowMode() {
         rainbowToggle = 0;
         rainbowButton.classList.remove('button-selected');
     }
-    console.log(rainbowToggle);
+}
+
+function overlapMode() {
+    if (overlapToggle == 0) {
+        overlapToggle = 1;
+        overlapButton.classList.add('button-selected');
+    } else {
+        overlapToggle = 0;
+        overlapButton.classList.remove('button-selected');
+    }
 }
