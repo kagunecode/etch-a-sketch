@@ -1,8 +1,19 @@
-function drawBoard(boardSize = 16) {
-    console.log("DRAWING BOARD!")
+const drawContainer = document.querySelector('.sketch');
+let pixelsCheck = 0;
+drawBoard();
+
+const currentColor = document.querySelector('#colorpicker');
+const eraseAll = document.querySelector('.erase-all');
+const canvasSizeButton = document.querySelectorAll('.canvas-size-button');
+let pixels= document.querySelectorAll(".pixel");
+
+
+drawContainer.addEventListener('mouseover', colorPixel);
+eraseAll.addEventListener('click', eraseBoard);
+canvasSizeButton.forEach(button => button.addEventListener('click', redrawBoard))
+
+function drawBoard(boardSize = "16x16") {
     let pixelDivider = 1;
-    boardSize = this.innerText;
-    console.log(boardSize);
     if (boardSize == "32x32") {
         pixelDivider = 2;
         boardSize = 32;
@@ -22,16 +33,20 @@ function drawBoard(boardSize = 16) {
             div.classList.add('pixel')
             drawContainer.appendChild(div);
         }
+    }    
+    if (pixelsCheck != 0) {
+        pixels = document.querySelectorAll(".pixel");
+    } else {
+        pixelsCheck = 1;
     }
 }
 
-function redrawBoard () {
+function redrawBoard (e) {
     let canvasSize = drawContainer.childElementCount;
-    console.log("Redrawing board!")
     for (let i=0; i<canvasSize; i++) {
         drawContainer.removeChild(drawContainer.lastElementChild)
     }
-    drawBoard()
+    drawBoard(e.target.innerText);
 }
 
 function colorPixel() {
@@ -43,21 +58,5 @@ function colorPixel() {
 }
 
 function eraseBoard() {
-    pixels.forEach(pixel => pixel.style.backgroundColor = "white") 
+    pixels.forEach(pixel => pixel.style.backgroundColor = "white")
 }
-
-const drawContainer = document.querySelector('.sketch');
-drawBoard(16, drawContainer);
-
-const currentColor = document.querySelector('#colorpicker');
-const eraseAll = document.querySelector('.erase-all');
-const pixels = document.querySelectorAll('.pixel');
-const canvasSizeButton = document.querySelectorAll('.canvas-size-button');
-
-
-drawContainer.addEventListener('mouseover', colorPixel());
-eraseAll.addEventListener('click', eraseBoard.bind());
-canvasSizeButton.forEach(button => button.addEventListener('click', (e) => {
-    redrawBoard();
-}))
-
